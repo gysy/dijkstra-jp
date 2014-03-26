@@ -1,3 +1,4 @@
+#-*- coding: UTF-8 -*-
 import datetime
 
 from django.contrib.auth.models import User
@@ -10,7 +11,7 @@ class StationaryType(models.Model):
     name=models.CharField(max_length=100)
     remark=models.CharField(max_length=100,default=None)
     
-    def __str__(self):
+    def __unicode__(self):
         return self.name
     
     def sum(self):
@@ -24,7 +25,7 @@ class Choice(models.Model):
     stationary_type=models.ForeignKey(StationaryType)
     num=models.IntegerField(default=0)
     
-    def __str__(self):
+    def __unicode__(self):
         return str(self.id)
     
     def get_user_name(self):

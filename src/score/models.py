@@ -1,3 +1,4 @@
+#-*- coding: UTF-8 -*- 
 from django.contrib import admin
 from django.db import models
 from django.utils.encoding import smart_text
@@ -9,7 +10,7 @@ from signup.models import Examsignup
 class Examscore(models.Model):
     examsignup = models.ForeignKey(Examsignup)
     score = models.IntegerField()
-    def __str__(self):
+    def __unicode__(self):
         return smart_text('%s 成绩为 %i' % (self.examsignup, self.score))
     
 class ExamscoreAdmin(admin.ModelAdmin):

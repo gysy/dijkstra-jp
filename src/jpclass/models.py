@@ -1,3 +1,4 @@
+#-*- coding: UTF-8 -*- 
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.db import models
@@ -6,14 +7,14 @@ from django.utils.encoding import smart_text
 
 class Ngrade(models.Model):
     grade = models.CharField(unique=True, max_length=2)
-    def __str__(self):
+    def __unicode__(self):
         return self.grade;
 
 class Jpclass(models.Model):
     ngrade = models.ForeignKey(Ngrade)
     classname = models.CharField(max_length=10, unique=True)
     
-    def __str__(self):
+    def __unicode__(self):
         return smart_text('班级:%s %s' % (self.classname, self.ngrade))
     
 class JpclassAdmin(admin.ModelAdmin):
@@ -23,7 +24,7 @@ class JpclassAdmin(admin.ModelAdmin):
 class Jpclasssubmit(models.Model):
     user = models.ForeignKey(User)
     jpclass = models.ForeignKey(Jpclass)
-    def __str__(self):
+    def __unicode__(self):
         return smart_text('%s 报名了  %s' % (self.user, self.jpclass))
     
 class JpclasssubmitAdmin(admin.ModelAdmin):
