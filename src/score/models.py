@@ -11,7 +11,7 @@ class Examscore(models.Model):
     examsignup = models.ForeignKey(Examsignup)
     score = models.IntegerField()
     def __unicode__(self):
-        return smart_text('%s 成绩为 %i' % (self.examsignup, self.score))
+        return smart_text('%s  %i' % (self.examsignup, self.score))
     
 class ExamscoreAdmin(admin.ModelAdmin):
     list_display = ('examsignup', 'score')

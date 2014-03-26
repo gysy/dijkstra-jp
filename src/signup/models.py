@@ -11,7 +11,7 @@ class Examdate(models.Model):
     year = models.IntegerField()
     month = models.IntegerField(unique=True)
     def __unicode__(self):
-        return smart_text('%i年%i月' % (self.year, self.month))
+        return smart_text('%i-%i' % (self.year, self.month))
 
 class ExamdateAdmin(admin.ModelAdmin):
     list_display = ('year', 'month')
@@ -21,7 +21,7 @@ class Examsignup(models.Model):
     ngrade = models.ForeignKey(Ngrade)
     examdate = models.ForeignKey(Examdate)
     def __unicode__(self):
-        return smart_text('%s 报名了 %s 的 日本语%s的考试' % (self.user, self.examdate, self.ngrade))
+        return smart_text('%s has signed up %s 的 %s' % (self.user, self.examdate, self.ngrade))
 
 class ExamsignupAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'ngrade', 'examdate')

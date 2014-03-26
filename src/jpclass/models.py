@@ -1,4 +1,3 @@
-#-*- coding: UTF-8 -*-
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.db import models
@@ -15,7 +14,7 @@ class Jpclass(models.Model):
     classname = models.CharField(max_length=10, unique=True)
     
     def __str__(self):
-        return smart_text('班级:%s %s' % (self.classname, self.ngrade))
+        return smart_text('Classname:%s %s' % (self.classname, self.ngrade))
     
 class JpclassAdmin(admin.ModelAdmin):
     list_display = ('id', 'ngrade', 'classname')
@@ -25,7 +24,7 @@ class Jpclasssubmit(models.Model):
     user = models.ForeignKey(User)
     jpclass = models.ForeignKey(Jpclass)
     def __unicode__(self):
-        return smart_text('%s 报名了  %s' % (self.user, self.jpclass))
+        return smart_text('%s has signed up  %s' % (self.user, self.jpclass))
     
 class JpclasssubmitAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'jpclass')
