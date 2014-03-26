@@ -1,0 +1,14 @@
+{% extends "stationary/base.html" %}
+{% block title %}Insert title here{% endblock %}
+{% block content %}
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<form action="{% url 'stationary:submit' %}" method="post">
+{% csrf_token %}
+{% for stationary in stationarytype %}
+{{ forloop.counter }}
+	<label for="stationary{{ forloop.counter }}">{{ stationary.name }}</label>
+    <input type="text" name="stationary_num{{ forloop.counter }}" id="stationary{{ forloop.counter }}" value="" size="4" /> <br />
+{% endfor %}
+<input type="submit" value="Submit" />
+</form>
+{% endblock %}
