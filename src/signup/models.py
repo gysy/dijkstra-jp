@@ -1,3 +1,4 @@
+#-*- coding: UTF-8 -*-
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.db import models
@@ -7,9 +8,9 @@ from jpclass.models import Ngrade
 
 
 class Examdate(models.Model):
-    year = models.IntegerField(unique=True)
+    year = models.IntegerField()
     month = models.IntegerField(unique=True)
-    def __str__(self):
+    def __unicode__(self):
         return smart_text('%i年%i月' % (self.year, self.month))
 
 class ExamdateAdmin(admin.ModelAdmin):
@@ -19,7 +20,7 @@ class Examsignup(models.Model):
     user = models.ForeignKey(User)
     ngrade = models.ForeignKey(Ngrade)
     examdate = models.ForeignKey(Examdate)
-    def __str__(self):
+    def __unicode__(self):
         return smart_text('%s 报名了 %s 的 日本语%s的考试' % (self.user, self.examdate, self.ngrade))
 
 class ExamsignupAdmin(admin.ModelAdmin):
