@@ -7,13 +7,13 @@ from django.shortcuts import render
 # Create your views here.
 
 def index(request):  
-    # 用户的个人页面  
+  
     return render(request, 'account/login.html')  
 
 def login(request):  
-    # 表单提交过来的数据  
+ 
     if request.user.is_authenticated():  
-        return  HttpResponse('你已经登录')  
+        return  HttpResponse('You have logend in.')  
     if request.method == 'POST':  
         username = request.POST['username']  
         password = request.POST['password']  
@@ -24,9 +24,9 @@ def login(request):
 #                         return HttpResponseRedirect('/account/%d' % user.id)  
                         return HttpResponseRedirect(reverse('stationary:index'))
             else:  
-                    return HttpResponse('用户没有启用!')  
+                    return HttpResponse('User might be not invoked!')  
         else:  
-                return HttpResponse('用户名或者密码错误！')  
+                return HttpResponse('Username or Password might be wrong!')  
     else:  
         return render(request,'account/login.html')  
 
