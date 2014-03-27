@@ -7,13 +7,11 @@ from jpclass.models import Ngrade
 
 
 class Examdate(models.Model):
-    year = models.IntegerField(unique=True)
-    month = models.IntegerField(unique=True)
+    date = models.CharField(unique=True, max_length=10)
     def __str__(self):
-        return smart_text('%i-%i' % (self.year, self.month))
+        return self.date
 
-class ExamdateAdmin(admin.ModelAdmin):
-    list_display = ('year', 'month')
+
 
 class Examsignup(models.Model):
     user = models.ForeignKey(User)
@@ -28,5 +26,5 @@ class ExamsignupAdmin(admin.ModelAdmin):
     search_fields = ['user']
     
     
-admin.site.register(Examdate, ExamdateAdmin)
+admin.site.register(Examdate)
 admin.site.register(Examsignup, ExamsignupAdmin)

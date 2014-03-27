@@ -5,7 +5,7 @@ from django.utils.encoding import smart_text
 
 
 class Ngrade(models.Model):
-    grade = models.CharField(unique=True, max_length=2)
+    grade = models.CharField(unique=True, max_length=2, default=None)
     def __unicode__(self):
         return self.grade
 

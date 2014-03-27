@@ -1,19 +1,16 @@
 {% extends "signup/base.html" %}
-{% block title %}signup submit{% endblock %}
+{% block title %}Insert title here{% endblock %}
 {% block content %}
-	{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-	<form action="{% url 'signup:submit' signup.id %}" method="post">
-		{% csrf_token %}
-		{% for Examdate in signup.Examdate_set.all %}
-			{{ forloop.counter }}
-			<label for="examdate{{ forloop.counter }}">{{ signup.examdate_text }}</label><br />
-    		<input type="radio" name="examdate{{ forloop.counter }}" id="Examdate{{ forloop.counter }}" value="Examdate.id" size="4" />  
-		{% endfor %}
-		{% for  in signup.Examdate_set.all %}
-			{{ forloop.counter }}
-			<label for="examdate{{ forloop.counter }}">{{ signup.examdate_text }}</label><br />
-    		<input type="radio" name="examdate{{ forloop.counter }}" id="Examdate{{ forloop.counter }}" value="Examdate.id" size="4" />  
-		{% endfor %}
-		<input type="submit" value="Submit" />
-	</form>
+<form action="{% url 'signup:submit' %}" method="post">
+{% csrf_token %}
+{% for signup in exam_signup %}
+    {{ forloop.counter }}    	
+		<label for="signup{{ forloop.counter }}">{{ signup.date }}</label></br>
+		{% for grade in ngrade %}
+				<input type="radio" name="grade{{forloop.counter}}" id=ngrade"{{forloop.counter}}" value="" size="" />
+				<label for="grade{{ forloop.counter }}">{{ grade.grade }}</label></br>
+		{% endfor %}		
+{% endfor %}
+<input type="submit" value="Submit" />
+</form>
 {% endblock %}
