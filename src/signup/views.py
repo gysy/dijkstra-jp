@@ -17,10 +17,14 @@ def result(request):
     return render(request, 'signup/result.html', {'user_list':User.objects.all(), 'signup_list':ExamsignupSubmit.objects.all()})
 
 def submit(request):
+    try:
         tempngrade = request.POST['grade']
         tempdate = request.POST['date']
         ngrade=Ngrade.objects.get(grade= tempngrade)
         date=Examdate.objects.get(date=tempdate)
+    except(KeyError,Examsignup.DoesNotExist):
+        return render(request,'signup/index.html',{ 'error_message':"You inputed something wrong!",})
+    else:
         tempsignup = Examsignup.objects.get(ngrade=ngrade, examdate=date)
         u = request.user
         u.examsignupsubmit_set.create(examsignup=tempsignup)
