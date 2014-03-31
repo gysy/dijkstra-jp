@@ -8,23 +8,34 @@ from jpclass.models import Ngrade
 
 class Examdate(models.Model):
     date = models.CharField(unique=True, max_length=10)
-    def __str__(self):
+    def __unicode__(self):
         return self.date
 
 
 
 class Examsignup(models.Model):
-    user = models.ForeignKey(User)
     ngrade = models.ForeignKey(Ngrade)
     examdate = models.ForeignKey(Examdate)
-    def __str__(self):
-        return smart_text('%s has signed up %s %s' % (self.user, self.examdate, self.ngrade))
+    def __unicode__(self):
+        return smart_text('%s %s' % (self.examdate, self.ngrade))
 
 class ExamsignupAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'ngrade', 'examdate')
+    list_display = ('id', 'ngrade', 'examdate')
     list_filter = ['ngrade']
-    search_fields = ['user']
     
+class ExamsignupSubmit(models.Model):
+    user=models.ForeignKey(User)
+    examsignup=models.ForeignKey(Examsignup)
+#    ngrade=models.ForeignKey(Ngrade)
+#    examdate=models.ForeignKey(Examdate)
+    def __unicode__(self):
+        return smart_text('%s has signed up %s %s' % (self.user, self.examsignup.examdate, self.examsignup.ngrade))
     
+class ExamsignupSubmitAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'examsignup')
+    search_field=['user']
+
+
 admin.site.register(Examdate)
 admin.site.register(Examsignup, ExamsignupAdmin)
+admin.site.register(ExamsignupSubmit,ExamsignupSubmitAdmin)

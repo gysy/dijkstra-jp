@@ -1,16 +1,22 @@
 {% extends "signup/base.html" %}
 {% block title %}Insert title here{% endblock %}
 {% block content %}
+<h3>Exam Signup</h3>
 <form action="{% url 'signup:submit' %}" method="post">
 {% csrf_token %}
-{% for signup in exam_signup %}
-    {{ forloop.counter }}    	
-		<label for="signup{{ forloop.counter }}">{{ signup.date }}</label></br>
-		{% for grade in ngrade %}
-				<input type="radio" name="grade{{forloop.counter}}" id=ngrade"{{forloop.counter}}" value="" size="" />
-				<label for="grade{{ forloop.counter }}">{{ grade.grade }}</label></br>
-		{% endfor %}		
-{% endfor %}
+<select name="date">
+	{% for date in exam_date %} 
+		<option value="{{ date.date }}">{{ date.date }}</option>
+	{% endfor %}
+</select>
+<select name="grade">
+	{% for ngrade in exam_ngrade %}
+		{% if ngrade.grade != "NULL" %}
+			<option value="{{ ngrade.grade }}">{{ ngrade.grade }}</option>
+		{% endif %}
+	{% endfor %}
+</select>
+</br>
 <input type="submit" value="Submit" />
 </form>
 {% endblock %}
