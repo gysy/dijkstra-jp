@@ -1,0 +1,21 @@
+{% extends "jpclass/base.html" %}
+{% block title %}Insert title here{% endblock %}
+{% block content %}
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<form action="{% url 'jpclass:submit' %}" method="post">
+{% csrf_token %}
+<select name="ngrade">
+{% for mngrade in ngrade %}
+<option value="{{ mngrade.grade }}">{{ mngrade.grade }}</option>
+{% endfor %}
+</select>
+
+<select name="classname">
+{% for mjpclass in jpclass %}
+<option value="{{ mjpclass.classname }}">{{ mjpclass.classname }}</option>
+{% endfor %}
+</select>
+
+<input type="submit" value="Submit" />
+</form>
+{% endblock %}
