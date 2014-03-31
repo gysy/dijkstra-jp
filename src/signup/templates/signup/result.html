@@ -1,0 +1,11 @@
+{% extends "signup/base.html" %}
+{% block title %}Insert title here{% endblock %} 
+{% block content %}
+<h3>Exam signup results</h3>
+<form>
+	{% for exam in signup_list %}
+		{{ forloop.counter }} 
+		{{exam.user}}&nbsp&nbsp{{exam.examsignup}}</br>
+	{% endfor %}
+</form>
+{% endblock %}	

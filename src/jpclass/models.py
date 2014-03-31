@@ -5,15 +5,15 @@ from django.utils.encoding import smart_text
 
 
 class Ngrade(models.Model):
-    grade = models.CharField(unique=True, max_length=2)
+    grade = models.CharField(unique=True, max_length=5)
     def __unicode__(self):
-        return self.grade;
-
+        return self.grade
+    
 class Jpclass(models.Model):
     ngrade = models.ForeignKey(Ngrade)
-    classname = models.CharField(max_length=10, unique=True)
+    classname = models.CharField(max_length=10)
     
-    def __str__(self):
+    def __unicode__(self):
         return smart_text('Classname:%s %s' % (self.classname, self.ngrade))
     
 class JpclassAdmin(admin.ModelAdmin):
