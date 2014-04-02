@@ -12,5 +12,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^stationary/', include('stationary.urls',namespace='stationary')),
     url(r'^account/', include('account.urls',namespace='account')),
+    url(r'^jpclass/', include('jpclass.urls',namespace='jpclass')),
     url(r'^signup/', include('signup.urls',namespace='signup')),
-)
+    url(r'^score/', include('score.urls',namespace='score')),
+    )

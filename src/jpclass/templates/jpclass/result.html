@@ -1,0 +1,8 @@
+{% extends "jpclass/base.html" %}
+{% block title %}Insert title here{% endblock %}
+{% block content %}
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<label > level:{{ user_jpclasssubmit.jpclass.ngrade }} <label />
+<br />
+<label > class:{{ user_jpclasssubmit.jpclass.classname }} <label />
+{% endblock %}
