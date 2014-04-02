@@ -1,7 +1,6 @@
 {% extends "signup/base.html" %}
 {% block title %}Insert title here{% endblock %}
 {% block content %}
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 <h3>Exam Signup</h3>
 <form action="{% url 'signup:submit' %}" method="post">
 {% csrf_token %}
