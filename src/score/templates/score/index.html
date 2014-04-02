@@ -5,9 +5,9 @@
 <h3>Exam score</h3>
 <form action="{% url 'score:submit' %}" method="post">
 {% csrf_token %}
-<select name="signupsubmit">
-	{% for signupsubmit in exam_signupsubmit %} 
-		<option value="{{ signupsubmit.id }}">{{ signupsubmit.examsignup }}</option>
+<select name="signup">
+	{% for signup in exam_signup %} 
+		<option value="{{ signup.id }}">{{ signup }}</option>
 	{% endfor %}
 </select>
 <br />

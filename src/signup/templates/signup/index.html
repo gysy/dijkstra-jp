@@ -6,13 +6,13 @@
 {% csrf_token %}
 <select name="date">
 	{% for date in exam_date %} 
-		<option value="{{ date.date }}">{{ date.date }}</option>
+		<option value="{{ date.id }}">{{ date.date }}</option>
 	{% endfor %}
 </select>
 <select name="grade">
 	{% for ngrade in exam_ngrade %}
 		{% if ngrade.grade != "NULL" %}
-			<option value="{{ ngrade.grade }}">{{ ngrade.grade }}</option>
+			<option value="{{ ngrade.id }}">{{ ngrade.grade }}</option>
 		{% endif %}
 	{% endfor %}
 </select>
