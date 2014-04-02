@@ -14,4 +14,5 @@ urlpatterns = patterns('',
     url(r'^account/', include('account.urls',namespace='account')),
     url(r'^jpclass/', include('jpclass.urls',namespace='jpclass')),
     url(r'^signup/', include('signup.urls',namespace='signup')),
-)
+    url(r'^score/', include('score.urls',namespace='score')),
+    )
