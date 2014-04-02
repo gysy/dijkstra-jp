@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from jpclass.models import Ngrade, Jpclass, Jpclasssubmit
+from django.core.exceptions import ObjectDoesNotExist
 
 def index(request):
     context = {'user':request.user, 'ngrade':Ngrade.objects.all(),'jpclass':Jpclass.objects.all()}
@@ -15,13 +16,15 @@ def submit(request):
         tempclassname = request.POST['classname']
         tempjpclass = Jpclass.objects.get(ngrade = tempngrade, classname = str(tempclassname))
 
-    except (KeyError, Ngrade.DoseNotExist):
-        return render(request, 'jpclass/index.html',{'error_message':"You didn't choose level."})
-    except (KeyError, Jpclass.DoesNotExist):
-        return render(request, 'jpclass/index.html',{ 'error_message': "level does not match class.", })
+#    except (KeyError, Ngrade.DoseNotExist):
+#        return render(request, 'jpclass/index.html',{'error_message':"You didn't choose level.", 'user':request.user, 'ngrade':Ngrade.objects.all(),'jpclass':Jpclass.objects.all()})
+#    except (KeyError, Jpclass.DoesNotExist):
+#        return render(request, 'jpclass/index.html',{'error_message':"level dose not match class.", 'user':request.user, 'ngrade':Ngrade.objects.all(),'jpclass':Jpclass.objects.all()})
+    except ObjectDoesNotExist:
+        return render(request, 'jpclass/index.html',{'error_message':"wrong input.", 'user':request.user, 'ngrade':Ngrade.objects.all(),'jpclass':Jpclass.objects.all()})
     else:
         u = request.user
-        if(Jpclasssubmit.objects.get(user = u)):
+        if(Jpclasssubmit.objects.get(user = u) is None):
             Jpclasssubmit.objects.get(user = u).delete()
         #save data
         u.jpclasssubmit_set.create(jpclass = tempjpclass)
