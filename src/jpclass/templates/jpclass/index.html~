@@ -5,7 +5,7 @@
 <form action="{% url 'jpclass:submit' %}" method="post">
 {% csrf_token %}
 <select name="ngrade">
-{% for mngrade in existngrade %}
+{% for mngrade in ngrade %}
 <option value="{{ mngrade.grade }}">{{ mngrade.grade }}</option>
 {% endfor %}
 </select>
@@ -13,6 +13,7 @@
 <select name="classname">
 {% for mjpclass in jpclass %}
 <option value="{{ mjpclass.classname }}">{{ mjpclass.classname }}</option>
+<span value="{{ myjpclass.ngrade }}" style="display:none"></span>
 {% endfor %}
 </select>
 
