@@ -11,10 +11,8 @@ class Examscore(models.Model):
     vocabulary = models.IntegerField(default=0)
     reading = models.IntegerField(default=0)
     grammer = models.IntegerField(default=0)
-    # def score(self):
-    #    return
     def __unicode__(self):
-        return smart_text('%s vocabulary_score:%i reading_score:%i grammer_score:%i' % (self.examsignup, self.vocabulary, self.reading, self.grammer))
+        return smart_text('%s vocabulary_score:%i reading_score:%i grammar_score:%i' % (self.examsignup, self.vocabulary, self.reading, self.grammer))
     
 class ExamscoreAdmin(admin.ModelAdmin):
     list_display = ('examsignup', 'vocabulary', 'reading', 'grammer')

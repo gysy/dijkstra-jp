@@ -13,4 +13,7 @@ urlpatterns = patterns('',
     url(r'^$', views.index, name="index"),
     url(r'^submit/$',views.submit,name="submit"),
     url(r'^result/$',views.result,name="result"),
+    url(r'^resultall/$',views.resultall,name="resultall"),
+    url(r'^cancel/$',views.cancel,name="cancel"),
+    url(r'^submitc/$',views.submitc,name="submitc"),
 )

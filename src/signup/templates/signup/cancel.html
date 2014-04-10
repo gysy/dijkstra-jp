@@ -1,0 +1,17 @@
+{% extends "signup/base.html" %}
+{% block title %}Insert title here{% endblock %}
+{% block content %}
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<h3>Exam Signup</h3>
+<form action="{% url 'signup:submitc' %}" method="post">
+{% csrf_token %}
+<select name="examsignupinfo">
+	{% for examsignup in exam_signup %} 
+		<option value="{{ examsignup.id }}">{{ examsignup }}</option><br />
+	{% endfor %}
+</select>
+<br />
+<input type="submit" name="cancel" value="delete" />
+</form>
+<a href="../">Back to signup index</a>
+{% endblock %}

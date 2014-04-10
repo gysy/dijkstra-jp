@@ -12,10 +12,11 @@ def index(request):
     return render(request, 'score/index.html', context)
 
 def result(request):
-	tempexamsignup = []
-	for signup in Examsignup.objects.filter(user=request.user):
-		tempexamsignup.append(Examscore.objects.filter(examsignup=signup))
-	return render(request, 'score/result.html', {'user':request.user, 'exam_score':tempexamsignup})
+	tempexamsignup = Examsignup.objects.filter(user=request.user)
+	tempexamscore = []
+	for signup in tempexamsignup:
+		tempexamscore.append(Examscore.objects.get(examsignup=signup))
+	return render(request, 'score/result.html', {'user':request.user, 'examscore':tempexamscore})
 
 def submit(request):
 	try:
@@ -24,7 +25,7 @@ def submit(request):
 	    g = request.POST['grammer']
 	    tempsignup = Examsignup.objects.get(id=request.POST['signup'])
 	    if not (v.isdigit() and r.isdigit() and g.isdigit()):
-	    	return render(request,'score/index.html',{ 'error_message':"You've inputed something wrong! Please try again.",'user':request.user, 'exam_signup':Examsignup.objects.filter(user = request.user)})
+	    	return render(request,'score/index.html',{ 'error_message':"You've inputted something wrong! Please try again.",'user':request.user, 'exam_signup':Examsignup.objects.filter(user = request.user)})
 	    tempv=int(v)
 	    tempr=int(r)
 	    tempg=int(g)
@@ -36,7 +37,7 @@ def submit(request):
 	    	return render(request,'score/index.html',{ 'error_message':"Grammer_score out of range! Please try again.",'user':request.user, 'exam_signup':Examsignup.objects.filter(user = request.user)})
 	    Examscore.objects.get(examsignup=tempsignup).delete()
 	except(KeyError):
-		return render(request,'score/index.html',{ 'error_message':"You've inputed something wrong! Please try again.",'user':request.user, 'exam_signup':Examsignup.objects.filter(user = request.user)})
+		return render(request,'score/index.html',{ 'error_message':"You've inputted something wrong! Please try again.",'user':request.user, 'exam_signup':Examsignup.objects.filter(user = request.user)})
 	except(ObjectDoesNotExist):
 		tempsignup.examscore_set.create(vocabulary = tempv, reading = tempr, grammer = tempg)
 		return HttpResponseRedirect(reverse('score:result'))

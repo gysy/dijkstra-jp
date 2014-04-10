@@ -3,9 +3,23 @@
 {% block content %}
 <p><b>Insert success.</b></p>
 
-<form>
-	{% for score in exam_score %}
-		&nbsp&nbsp{{score}}<br />
+<table border="1"
+cellpadding="5">
+	<tr>
+		<th>ExamDate</th>
+		<th>Ngrade</th>
+		<th>Vocabulary</td>
+		<th>Reading</th>
+		<th>Grammar</th>
+	</tr>
+	{% for score in examscore %}
+	<tr>
+		<td>{{ score.examsignup.examdate }}</td>
+		<td>{{ score.examsignup.ngrade }}</td>
+		<td>{{ score.vocabulary }}</td>
+		<td>{{ score.reading }}</td>
+		<td>{{ score.grammer }}</td>
+	</tr>
 	{% endfor %}
-</form>
+</table>
 {% endblock %}

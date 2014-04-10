@@ -1,0 +1,24 @@
+{% extends "signup/base.html" %}
+{% block title %}Insert title here{% endblock %} 
+{% block content %}
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<h3>Exam signup info</h3>
+<table border="1"
+cellpadding="5">
+	<tr>
+		<th>No.</th>
+		<th>User</th>
+		<th>Ngrade</th>
+		<th>ExamDate</th>
+	</tr>
+	{% for exam in signup_list %}
+	<tr>
+		<td>{{forloop.counter}}</td>
+		<td>{{exam.user}}</td>
+		<td>{{exam.ngrade}}</td>
+		<td>{{exam.examdate}}</td>
+	</tr>
+	{% endfor %}
+</table>
+<a href="../">Badk to signup index</a>
+{% endblock %}	

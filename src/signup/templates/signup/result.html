@@ -1,11 +1,13 @@
 {% extends "signup/base.html" %}
 {% block title %}Insert title here{% endblock %} 
 {% block content %}
-<h3>Exam signup results</h3>
-<form>
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<h3>Exam signup info</h3>
+
 	{% for exam in signup_list %}
 		{{ forloop.counter }} 
 		&nbsp&nbsp{{exam}}</br>
 	{% endfor %}
-</form>
-{% endblock %}	
+
+<a href="../">Back to signup index</a><br />
+{% endblock %}
