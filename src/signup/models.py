@@ -41,7 +41,7 @@ class ExamsignupSubmit(models.Model):
 #    ngrade=models.ForeignKey(Ngrade)
 #    examdate=models.ForeignKey(Examdate)
     def __unicode__(self):
-        return smart_text('%s has signed up %s %s' % (self.user, self.examsignup.examdate, self.examsignup.ngrade))
+        return smart_text('%s %s %s' % (self.user, self.examsignup.examdate, self.examsignup.ngrade))
     
 class ExamsignupSubmitAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'examsignup')
