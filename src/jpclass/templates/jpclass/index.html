@@ -2,20 +2,151 @@
 {% block title %}Insert title here{% endblock %}
 {% block content %}
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-<form action="{% url 'jpclass:submit' %}" method="post">
-{% csrf_token %}
-<select name="ngrade">
-{% for mngrade in ngrade %}
-<option value="{{ mngrade.grade }}">{{ mngrade.grade }}</option>
-{% endfor %}
-</select>
+<div class="row">
+	<div class="col-lg-8">
+		<div class="panel panel-primary" style="margin:50px">
+			<div class="panel-heading">
+				<h3 class="panel-title">Japanese Class</h3>
+			</div>
+			<div class="panel-body">
+				<div id="resultrow" class="row">
+					<div class="col-lg-4">
+						<label id="levellabel" style="margin-top: 5px; margin-left: 10px; margin-bottom: 0px;"> Level:</label>
+					</div>
+					<div class="col-lg-4">
+						<label id="classlabel" style="margin-top: 5px; margin-left: 10px; margin-bottom: 0px;"> Class:</label>
+					</div>
+					<div class="col-lg-2">
+						<button id="changebtn" type="button" class="btn btn-primary btn-block" >Change</button>
+					</div>
+					<div class="col-lg-2">
+						<form action="{% url 'jpclass:index' %}" method="post" style="margin-bottom:0px">
+							{% csrf_token %}
+							<button id="clearbtn" type="submit" name="function" value="clear" class="btn btn-danger btn-block" >Clear</button>
+						</form>
+					</div>
+				</div>
+				<div id="selectrow" class="row" style="display:none">
+					<form action="{% url 'jpclass:index' %}" method="post">
+						{% csrf_token %}
+						<div class="col-lg-4">
+							<select id="selectngrade" name="ngradeid" class="form-control" placeholder=".col-lg-1">
+							</select>
+						</div>
+						<div class="col-lg-4">
+							<select id="selectclass" name="jpclassid" class="form-control" placeholder=".col-lg-2">
+							</select>
+						</div>
+						<div class="col-lg-2">
+							<button id="submitbtn" name="function" value="submit" type="submit" class="btn btn-primary btn-block" >Submit</button>
+						</div>
+						<div class="col-lg-2">
+							<button id="cancelbtn" type="button" class="btn btn-default btn-block">Cancel</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<span id ="gradestr" style="display:none">{{ gradestr }}</span>
+<span id ="classstr" style="display:none">{{ classstr }}</span>
+<span id ="user_jpclasssubmit" style="display:none">{{ user_jpclasssubmit }}</span>
+<script>
 
-<select name="classname">
-{% for mjpclass in jpclass %}
-<option value="{{ mjpclass.classname }}">{{ mjpclass.classname }}</option>
-{% endfor %}
-</select>
+if ($("#user_jpclasssubmit").text() == "None") {
+	$("#levellabel").text("Level:None");
+	$("#classlabel").text("Class:None");
+}
+else{
+	$("#levellabel").text("Level:{{ user_jpclasssubmit.jpclass.ngrade }}");
+	$("#classlabel").text("Class:{{ user_jpclasssubmit.jpclass.classname }}");
+	
+	
+}
 
-<input type="submit" value="Submit" />
-</form>
+var gradestr = $("#gradestr").text();
+var gradejson = $.parseJSON( gradestr );
+var ngrade = new Array();
+var i = 0;
+
+$.each(gradejson, function(i,object){
+	var tempk = "";
+	$.each(object,function(item,value){
+		tempk = this['grade'];
+	});
+	ngrade[i++]={id:this['pk'], grade:tempk};
+});
+
+for (var i = 0; i < ngrade.length; i++) {
+	$("<option>").val(ngrade[i].id).text(ngrade[i].grade).appendTo('#selectngrade');
+};
+
+if($("#user_jpclasssubmit").text() != "None"){
+	$(document).ready(function() {
+		$("#selectngrade option[value={{ user_jpclasssubmit.jpclass.ngrade.id }}]").attr('selected', 'selected');
+	});
+}
+
+var classstr = $("#classstr").text();
+var classjson = $.parseJSON( classstr );
+var classes = new Array();
+i = 0;
+$.each(classjson, function(i,object){
+	var tempc = "";
+	var tempg = "";
+	$.each(object,function(item,value){
+		tempc = this['classname'];
+		tempg = this['ngrade'];
+	});
+	classes[i++]={id:this['pk'],classname:tempc,ngrade:tempg};
+});
+
+$(document).ready(function() {
+	for (var i = 0; i < classes.length; i++) {
+		if (classes[i].ngrade == $("#selectngrade option:selected" ).attr("value")){
+			$("<option>").val(classes[i].id).text(classes[i].classname).appendTo('#selectclass');
+		}
+	};
+});
+
+
+
+
+if($("#user_jpclasssubmit").text() != "None"){
+	$(document).ready(function() {
+		$("#selectclass option[value={{ user_jpclasssubmit.jpclass.id }}]").attr('selected', 'selected');
+	});
+}
+
+
+
+$("#selectngrade").change(function(){
+	$("#selectngrade option:selected" ).each(function() {
+		$("#selectclass option").remove();
+		for (var i = 0; i < classes.length; i++) {
+			if (classes[i].ngrade == $("#selectngrade option:selected" ).attr("value")){
+				$("<option>").val(classes[i].id).text(classes[i].classname).appendTo('#selectclass');
+			}
+		};
+
+	});
+
+
+});
+
+
+
+$("#changebtn").click(function(){
+	$("#resultrow").css('display', 'none');
+	$("#selectrow").css('display', 'block');
+});
+
+$("#cancelbtn").click(function(){
+	$("#resultrow").css('display', 'block');
+	$("#selectrow").css('display', 'none');
+});
+
+
+</script>
 {% endblock %}
