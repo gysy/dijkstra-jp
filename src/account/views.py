@@ -1,3 +1,4 @@
+#-*- coding: UTF-8 -*-
 from django.contrib.auth import authenticate,login as user_login, logout as user_logout 
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponse, HttpResponseRedirect
@@ -22,7 +23,7 @@ def login(request):
             if user.is_active:  
                         user_login(request, user)  
 #                         return HttpResponseRedirect('/account/%d' % user.id)  
-                        return HttpResponseRedirect(reverse('signup:index'))
+                        return HttpResponseRedirect(reverse('score:index'))
             else:  
                     return HttpResponse('User might be not invoked!')  
         else:  

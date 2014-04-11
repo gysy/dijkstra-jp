@@ -1,3 +1,4 @@
+#-*- coding: UTF-8 -*- 
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.db import models
@@ -7,10 +8,10 @@ from jpclass.models import Ngrade
 
 
 class Examdate(models.Model):
-	date = models.CharField(unique=True, max_length=10)
-	def __unicode__(self):
-		return self.date
-	
+    date = models.CharField(unique=True, max_length=10)
+    def __unicode__(self):
+        return self.date
+
 class Examsignup(models.Model):
 	user=models.ForeignKey(User)
 	ngrade=models.ForeignKey(Ngrade)
