@@ -20,7 +20,7 @@ class Examsignup(models.Model):
 		return smart_text('%s %s %s' % (self.user, self.examdate, self.ngrade))
 	
 class ExamsignupAdmin(admin.ModelAdmin):
-	list_display = ('id', 'user', 'ngrade','examdate')
+	list_display = ('user', 'ngrade','examdate')
 	search_field=['user']
 
 
