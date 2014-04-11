@@ -3,23 +3,29 @@
 {% block content %}
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 <h3>Exam Signup</h3>
-<form action="{% url 'signup:submit' %}" method="post">
+<form action="{% url 'signup:result' %}" method="post">
 {% csrf_token %}
+
 <select name="date">
-	{% for date in exam_date %} 
+	{% for date in exam_date %}
 		<option value="{{ date.id }}">{{ date.date }}</option>
 	{% endfor %}
 </select>
 <select name="grade">
 	{% for ngrade in exam_ngrade %}
-		{% if ngrade.grade != "NULL" %}
-			<option value="{{ ngrade.id }}">{{ ngrade.grade }}</option>
-		{% endif %}
+		<option value="{{ ngrade.id }}">{{ ngrade.grade }}</option>
 	{% endfor %}
 </select>
 <br />
 <input type="submit" name="submit" value="Submit" /><br />
 </form>
-<a href="cancel/">Wanna cancel signup(s)?</a><br />
-<a href="resultall/">Show all signup info</a>
+{% if error_message %}
+	<a href="../cancel/">Wanna cancel signup(s)?</a><br />
+	<a href="../resultall/">Show all signup info</a><br />
+	<a href="../../score/">Insert your score</a>
+{% else %}
+	<a href="cancel/">Wanna cancel signup(s)?</a><br />
+	<a href="resultall/">Show all signup info</a><br />
+	<a href="../score/">Insert your score</a>
+{% endif %}
 {% endblock %}

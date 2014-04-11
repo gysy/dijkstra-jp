@@ -2,7 +2,7 @@
 {% block title %}Insert title here{% endblock %}
 {% block content %}
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-<h3>Exam score</h3>
+<h3>Exam score:</h3>
 <form action="{% url 'score:submit' %}" method="post">
 {% csrf_token %}
 <select name="signup">
@@ -13,9 +13,9 @@
 <br />
 <label>Vocabulary score:</label>
 <input type="text" name="vocabulary" id="" value="" size="4" /><br />
-<label>Reading score:</label>
+<label>Reading&nbsp&nbsp&nbsp score:</label>
 <input type="text" name="reading" id="" value="" size="4" /><br />
-<label>Grammar score:</label>
+<label>Grammar&nbsp&nbsp&nbsp score:</label>
 <input type="text" name="grammer" id="" value="" size="4" /><br />
 <input type="submit" value="Submit" /><br />
 </form>

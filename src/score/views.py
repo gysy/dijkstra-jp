@@ -12,11 +12,16 @@ def index(request):
     return render(request, 'score/index.html', context)
 
 def result(request):
-	tempexamsignup = Examsignup.objects.filter(user=request.user)
 	tempexamscore = []
-	for signup in tempexamsignup:
-		tempexamscore.append(Examscore.objects.get(examsignup=signup))
-	return render(request, 'score/result.html', {'user':request.user, 'examscore':tempexamscore})
+	try:
+		tempexamsignup = Examsignup.objects.filter(user = request.user)
+		for signup in tempexamsignup:
+			if Examscore.objects.filter(examsignup = signup):
+				tempexamscore.append(Examscore.objects.get(examsignup = signup))
+	except(ObjectDoesNotExist):
+		return render(request,'score/index.html',{ 'error_message':"Signup info doesn't exist, please try again!",'user':request.user, 'exam_signup':Examsignup.objects.filter(user = request.user)})
+	else:
+		return render(request, 'score/result.html', {'user':request.user, 'examscore':tempexamscore})
 
 def submit(request):
 	try:
@@ -30,11 +35,11 @@ def submit(request):
 	    tempr=int(r)
 	    tempg=int(g)
 	    if tempv<0 or tempv>100 :
-	    	return render(request,'score/index.html',{ 'error_message':"Vocabulary_score out of range! Please try again.",'user':request.user, 'exam_signup':Examsignup.objects.filter(user = request.user)})
+	    	return render(request,'score/index.html',{ 'error_message':"Vocabulary_score is out of range! Please try again.",'user':request.user, 'exam_signup':Examsignup.objects.filter(user = request.user)})
 	    if tempr<0 or tempr>100 :
-	    	return render(request,'score/index.html',{ 'error_message':"Reading_score out of range! Please try again.",'user':request.user, 'exam_signup':Examsignup.objects.filter(user = request.user)})
+	    	return render(request,'score/index.html',{ 'error_message':"Reading_score is out of range! Please try again.",'user':request.user, 'exam_signup':Examsignup.objects.filter(user = request.user)})
 	    if tempg<0 or tempg>100 :
-	    	return render(request,'score/index.html',{ 'error_message':"Grammer_score out of range! Please try again.",'user':request.user, 'exam_signup':Examsignup.objects.filter(user = request.user)})
+	    	return render(request,'score/index.html',{ 'error_message':"Grammer_score is out of range! Please try again.",'user':request.user, 'exam_signup':Examsignup.objects.filter(user = request.user)})
 	    Examscore.objects.get(examsignup=tempsignup).delete()
 	except(KeyError):
 		return render(request,'score/index.html',{ 'error_message':"You've inputted something wrong! Please try again.",'user':request.user, 'exam_signup':Examsignup.objects.filter(user = request.user)})
