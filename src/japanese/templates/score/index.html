@@ -1,0 +1,22 @@
+{% extends "score/base.html" %}
+{% block title %}Insert title here{% endblock %}
+{% block content %}
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<h3>Exam score</h3>
+<form action="{% url 'japanese:score_submit' %}" method="post">
+{% csrf_token %}
+<select name="signup">
+	{% for signup in exam_signup %} 
+		<option value="{{ signup.id }}">{{ signup}}</option>
+	{% endfor %}
+</select>
+<br />
+<label>Vocabulary score:</label>
+<input type="text" name="vocabulary" id="" value="" size="4" /><br />
+<label>Reading score:</label>
+<input type="text" name="reading" id="" value="" size="4" /><br />
+<label>Grammer score:</label>
+<input type="text" name="grammer" id="" value="" size="4" /><br />
+<input type="submit" value="Submit" /><br />
+</form>
+{% endblock %}

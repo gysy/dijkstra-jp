@@ -1,0 +1,14 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+<form action="{% url 'account:logout' %}" method="post">
+ {% block user %}欢迎用户：{{user.username}}{% endblock %}
+ {% csrf_token %} 
+	<input type="submit" value="Logout" />
+</form>
+{% block content %}{% endblock %}
+</body>
+</html>
