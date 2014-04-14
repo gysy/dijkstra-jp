@@ -99,7 +99,7 @@ def score_submit(request):
         context = get_context(request)
         v = request.POST['vocabulary']
         r = request.POST['reading']
-        g = request.POST['grammer']
+        g = request.POST['grammar']
         tempsignup = Examsignup.objects.get(id=request.POST['signup'])
         if not (v.isdigit() and r.isdigit() and g.isdigit()):
             context['error_message']="You've inputed something wrong."
@@ -114,7 +114,7 @@ def score_submit(request):
             context['error_message']="Reading_score out of range!"
             return render(request,'japanese/index.html',context)
         if tempg<0 or tempg>100 :
-            context['error_message']="Grammer_score out of range!"
+            context['error_message']="Grammar_score out of range!"
             return render(request,'japanese/index.html',context)
         if Examscore.objects.filter(examsignup=tempsignup):
             Examscore.objects.get(examsignup=tempsignup).delete()
@@ -122,7 +122,7 @@ def score_submit(request):
         context['error_message']="ObjectDoesNotExist"
         return render(request,'japanese/index.html',context)
     else:
-        tempsignup.examscore_set.create(vocabulary = tempv, reading = tempr, grammer = tempg)
+        tempsignup.examscore_set.create(vocabulary = tempv, reading = tempr, grammar = tempg)
         return HttpResponseRedirect(reverse('japanese:japanese_index'))
 
 def score_delete(request,id):
