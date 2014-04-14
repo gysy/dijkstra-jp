@@ -1,110 +1,321 @@
-{% extends "jpclass/base.html" %}
+{% extends "japanese/base.html" %}
 {% block title %}Insert title here{% endblock %}
 {% block content %}
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 <div class="row">
-	<div class="col-lg-8">
-		<div class="panel panel-primary" style="margin:50px">
-			<div class="panel-heading">
-				<h3 class="panel-title">Japanese Class</h3>
-			</div>
-			<div class="panel-body">
-				<div id="resultrow" class="row">
-					<div class="col-lg-4">
-						<label id="levellabel" style="margin-top: 5px; margin-left: 10px; margin-bottom: 0px;"> Level:</label>
-					</div>
-					<div class="col-lg-4">
-						<label id="classlabel" style="margin-top: 5px; margin-left: 10px; margin-bottom: 0px;"> Class:</label>
-					</div>
-					<div class="col-lg-2">
-						<button id="changebtn" type="button" class="btn btn-primary btn-block" >Change</button>
-					</div>
-					<div class="col-lg-2">
-						<form action="{% url 'japanese:jpclass_index' %}" method="post" style="margin-bottom:0px">
-							{% csrf_token %}
-							<button id="clearbtn" type="submit" name="function" value="clear" class="btn btn-danger btn-block" >Clear</button>
-						</form>
-					</div>
-				</div>
-				<div id="selectrow" class="row" style="display:none">
-					<form action="{% url 'japanese:jpclass_index' %}" method="post">
-						{% csrf_token %}
-						<div class="col-lg-4">
-							<select id="selectngrade" name="ngradeid" class="form-control" placeholder=".col-lg-1">
-							</select>
-						</div>
-						<div class="col-lg-4">
-							<select id="selectclass" name="jpclassid" class="form-control" placeholder=".col-lg-2">
-							</select>
-						</div>
-						<div class="col-lg-2">
-							<button id="submitbtn" name="function" value="submit" type="submit" class="btn btn-primary btn-block" >Submit</button>
-						</div>
-						<div class="col-lg-2">
-							<button id="cancelbtn" type="button" class="btn btn-default btn-block">Cancel</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
+    <div class="col-lg-8">
+        <div class="panel panel-primary" style="margin:50px">
+            <div class="panel-heading">
+                <h3 class="panel-title">Japanese Class</h3>
+            </div>
+            <div class="panel-body">
+                <div id="resultrow" class="row">
+                    <div class="col-lg-4">
+                        <label id="levellabel" style="margin-top: 5px; margin-left: 10px; margin-bottom: 0px;"> Level:</label>
+                    </div>
+                    <div class="col-lg-4">
+                        <label id="classlabel" style="margin-top: 5px; margin-left: 10px; margin-bottom: 0px;"> Class:</label>
+                    </div>
+                    <div class="col-lg-2">
+                        <button id="changebtn" type="button" class="btn btn-primary btn-block" >Change</button>
+                    </div>
+                    <div class="col-lg-2">
+                        <form action="{% url 'japanese:japanese_index' %}" method="post" style="margin-bottom:0px">
+                            {% csrf_token %}
+                            <button id="clearbtn" type="submit" name="function" value="jpclass_clear" class="btn btn-danger btn-block" >Clear</button>
+                        </form>
+                    </div>
+                </div>
+                <div id="selectrow" class="row" style="display:none">
+                    <form action="{% url 'japanese:japanese_index' %}" method="post">
+                        {% csrf_token %}
+                        <div class="col-lg-4">
+                            <select id="selectngrade" name="ngradeid" class="form-control" placeholder=".col-lg-1">
+                            </select>
+                        </div>
+                        <div class="col-lg-4">
+                            <select id="selectclass" name="jpclassid" class="form-control" placeholder=".col-lg-2">
+                            </select>
+                        </div>
+                        <div class="col-lg-2">
+                            <button id="submitbtn" name="function" value="jpclass_submit" type="submit" class="btn btn-primary btn-block" >Submit</button>
+                        </div>
+                        <div class="col-lg-2">
+                            <button id="cancelbtn" type="button" class="btn btn-default btn-block">Cancel</button>
+                        </div>
+                    </form>
+                </div>
 
-		<div class="panel panel-primary" style="margin:50px">
-			<div class="panel-heading">
-				<h3 class="panel-title">Exam Sign Up</h3>
-			</div>
-			<div class="panel-body">
-				<div class="row">
-					<div class="col-lg-8">
-						<form action="{% url 'japanese:signup_submit' %}" method="post">
-							{% csrf_token %}
-							<div class="col-lg-4">
-								<select name="date" class="form-control">
-									{% for date in exam_date %} 
-									<option value="{{ date.id }}">{{ date.year }}:{{ date.month }}</option>
-									{% endfor %}
-								</select>
-							</div>
-							<div class="col-lg-4">
-								<select name="grade" class="form-control">
-									{% for ngrade in exam_ngrade %}
-									{% if ngrade.grade != "NULL" %}
-									<option value="{{ ngrade.id }}">{{ ngrade.grade }}</option>
-									{% endif %}
-									{% endfor %}
-								</select>
-							</div>
-							<div class="col-lg-4">
-								<input type="submit" value="Submit" class="btn btn-primary btn-block"/>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
+            </div>
+        </div>
 
-		<div class="panel panel-primary" style="margin:50px">
-			<div class="panel-heading">
-				<h3 class="panel-title">Exam Scores</h3>
-			</div>
-			<div class="panel-body">
-			</div>
-		</div>
-	</div>
+        <div class="panel panel-primary" style="margin:50px">
+            <div class="panel-heading">
+                <h3 class="panel-title">Exam Sign Up</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form action="{% url 'japanese:japanese_index' %}" method="post">
+                            {% csrf_token %}
+                            <div class="col-lg-4">
+                                <select name="date" class="form-control">
+                                    {% for date in examdate %} 
+                                    <option value="{{ date.id }}">{{ date.year }}:{{ date.month }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-lg-4">
+                                <select name="grade" class="form-control">
+                                    {% for ngrade in ngrade %}
+                                    {% if ngrade.grade != "NULL" %}
+                                    <option value="{{ ngrade.id }}">{{ ngrade.grade }}</option>
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-lg-4">
+                             <button  name="function" value="signup_submit" type="submit" class="btn btn-primary btn-block" >Submit</button>
+                         </div>
+                     </form>
+                 </div>
+             </div>
+             <div class="row" style="margin-top:10px">
+                <div class="col-lg-12">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Year</th>
+                            <th>Month</th>
+                            <th>Level</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tempsignup in signup %}
+                        {% if tempsignup.user == user %}
+                        <tr>
+                            <td>{{ tempsignup.examdate.year }}</td>
+                            <td>{{ tempsignup.examdate.month }}</td>
+                            <td>{{ tempsignup.ngrade.grade }}</td>
+                            <td>
+                                <button  class="deletebtn btn btn-primary btn-sm" >
+                                    delete
+                                </button>
+                                <span style="display:none">?signupdeleteid={{ tempsignup.id }}</span>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#allsignupModal">
+          View All
+      </button>
+
+  </div>
 </div>
+
+<div class="panel panel-primary" style="margin:50px">
+    <div class="panel-heading">
+        <h3 class="panel-title">Exam Scores</h3>
+    </div>
+    <div class="panel-body">
+
+       <form action="{% url 'japanese:japanese_index' %}" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-xs-2">
+                <label >Vocabulary</label>
+            </div>
+            <div  class="col-xs-2">
+                <input type="text" name="vocabulary" id="" value=""class="form-control" placeholder="Enter"></input>
+            </div>
+            <div class="col-xs-2">
+                <label >Grammar</label>
+            </div>
+            <div class="col-xs-2">
+                <input type="text" name="grammer" id="" value="" class="form-control" placeholder="Enter"></input>
+            </div>
+            <div class="col-xs-2">
+                <label >Reading</label>
+            </div>
+            <div class="col-xs-2">
+                <input type="text" name="reading" id="" value="" class="form-control" placeholder="Enter"></input>
+            </div>
+        </div>
+        <div class="row" style="margin-top:10px">
+            <div class="col-lg-4">
+                <select name="signup" class="form-control">
+                    {% for tempsignup in signup %}
+                    {% if tempsignup.user == user %}
+                    <option value="{{ tempsignup.id }}">{{ tempsignup }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-lg-2">
+                <button  name="function" value="score_submit" type="submit" class="btn btn-primary btn-block" >Submit</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="row" style="margin-top:10px">
+        <div class="col-lg-12">
+            <table class="table table-hover table-bordered">
+                <thead>
+                  <tr>
+                    <th>Exam</th>
+                    <th>Vocabulary</th>
+                    <th>Grammar</th>
+                    <th>Reading</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tempscore in score %}
+                {% if tempscore.examsignup.user == user %}
+                <tr>
+                    <td>{{ tempscore.examsignup }}</td>
+                    <td>{{ tempscore.vocabulary }}</td>
+                    <td>{{ tempscore.grammer }}</td>
+                    <td>{{ tempscore.reading }}</td>
+                    <td>
+                        <button  class="deletebtn btn btn-primary btn-sm" >
+                            delete
+                        </button>
+                        <span style="display:none">?scoredeleteid={{ tempscore.id }}</span>
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<button class="btn btn-primary btn-block" data-toggle="modal" data-target="#allscoreModal">
+  View All
+</button>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Delete confirm</h4>
+    </div>
+    <div class="modal-body">
+        <label>Are you sure to delete?</label>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <a id="modalcfmbtn" href="" type="button" class="btn btn-primary">Confirm Delete</a>
+    </div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="allsignupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">All Sign Up</h4>
+    </div>
+    <div class="modal-body">
+        <table class="table table-hover table-bordered">
+            <tr>
+                <th>No.</th>
+                <th>User</th>
+                <th>Ngrade</th>
+                <th>Year</th>
+                <th>Month</th>
+            </tr>            
+            {% for tempsignup in signup %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{tempsignup.user}}</td>
+                <td>{{tempsignup.ngrade}}</td>
+                <td>{{tempsignup.examdate.year}}</td>
+                <td>{{tempsignup.examdate.month}}</td>
+            </tr>            
+            {% endfor %}
+        </table>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="allscoreModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">All Sign Up</h4>
+    </div>
+    <div class="modal-body">
+        <table class="table table-hover table-bordered">
+            <tr>
+                <th>No.</th>
+                <th>User</th>
+                <th>Ngrade</th>
+                <th>Year</th>
+                <th>Month</th>
+                <th>Vocabulary</th>
+                <th>Grammar</th>
+                <th>Reading</th>
+            </tr>            
+            {% for tempscore in score %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{tempscore.examsignup.user}}</td>
+                <td>{{tempscore.examsignup.ngrade}}</td>
+                <td>{{tempscore.examsignup.examdate.year}}</td>
+                <td>{{tempscore.examsignup.examdate.month}}</td>
+                <td>{{tempscore.vocabulary}}</td>
+                <td>{{tempscore.grammer}}</td>
+                <td>{{tempscore.reading}}</td>
+            </tr>            
+            {% endfor %}
+        </table>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
 <span id ="gradestr" style="display:none">{{ gradestr }}</span>
 <span id ="classstr" style="display:none">{{ classstr }}</span>
 <span id ="user_jpclasssubmit" style="display:none">{{ user_jpclasssubmit }}</span>
 <script>
 
 if ($("#user_jpclasssubmit").text() == "None") {
-	$("#levellabel").text("Level:None");
-	$("#classlabel").text("Class:None");
+    $("#levellabel").text("Level:None");
+    $("#classlabel").text("Class:None");
 }
 else{
-	$("#levellabel").text("Level:{{ user_jpclasssubmit.jpclass.ngrade }}");
-	$("#classlabel").text("Class:{{ user_jpclasssubmit.jpclass.classname }}");
-	
-	
+    $("#levellabel").text("Level:{{ user_jpclasssubmit.jpclass.ngrade }}");
+    $("#classlabel").text("Class:{{ user_jpclasssubmit.jpclass.classname }}");
+    
+    
 }
 
 var gradestr = $("#gradestr").text();
@@ -113,21 +324,21 @@ var ngrade = new Array();
 var i = 0;
 
 $.each(gradejson, function(i,object){
-	var tempk = "";
-	$.each(object,function(item,value){
-		tempk = this['grade'];
-	});
-	ngrade[i++]={id:this['pk'], grade:tempk};
+    var tempk = "";
+    $.each(object,function(item,value){
+        tempk = this['grade'];
+    });
+    ngrade[i++]={id:this['pk'], grade:tempk};
 });
 
-for (var i = 0; i < ngrade.length; i++) {
-	$("<option>").val(ngrade[i].id).text(ngrade[i].grade).appendTo('#selectngrade');
+for (var i = 0; i< ngrade.length; i++) {
+    $("<option>").val(ngrade[i].id).text(ngrade[i].grade).appendTo('#selectngrade');
 };
 
 if($("#user_jpclasssubmit").text() != "None"){
-	$(document).ready(function() {
-		$("#selectngrade option[value={{ user_jpclasssubmit.jpclass.ngrade.id }}]").attr('selected', 'selected');
-	});
+    $(document).ready(function() {
+        $("#selectngrade option[value={{ user_jpclasssubmit.jpclass.ngrade.id }}]").attr('selected', 'selected');
+    });
 }
 
 var classstr = $("#classstr").text();
@@ -135,44 +346,44 @@ var classjson = $.parseJSON( classstr );
 var classes = new Array();
 i = 0;
 $.each(classjson, function(i,object){
-	var tempc = "";
-	var tempg = "";
-	$.each(object,function(item,value){
-		tempc = this['classname'];
-		tempg = this['ngrade'];
-	});
-	classes[i++]={id:this['pk'],classname:tempc,ngrade:tempg};
+    var tempc = "";
+    var tempg = "";
+    $.each(object,function(item,value){
+        tempc = this['classname'];
+        tempg = this['ngrade'];
+    });
+    classes[i++]={id:this['pk'],classname:tempc,ngrade:tempg};
 });
 
 $(document).ready(function() {
-	for (var i = 0; i < classes.length; i++) {
-		if (classes[i].ngrade == $("#selectngrade option:selected" ).attr("value")){
-			$("<option>").val(classes[i].id).text(classes[i].classname).appendTo('#selectclass');
-		}
-	};
+    for (var i = 0; i< classes.length; i++) {
+        if (classes[i].ngrade == $("#selectngrade option:selected" ).attr("value")){
+            $("<option>").val(classes[i].id).text(classes[i].classname).appendTo('#selectclass');
+        }
+    };
 });
 
 
 
 
 if($("#user_jpclasssubmit").text() != "None"){
-	$(document).ready(function() {
-		$("#selectclass option[value={{ user_jpclasssubmit.jpclass.id }}]").attr('selected', 'selected');
-	});
+    $(document).ready(function() {
+        $("#selectclass option[value={{ user_jpclasssubmit.jpclass.id }}]").attr('selected', 'selected');
+    });
 }
 
 
 
 $("#selectngrade").change(function(){
-	$("#selectngrade option:selected" ).each(function() {
-		$("#selectclass option").remove();
-		for (var i = 0; i < classes.length; i++) {
-			if (classes[i].ngrade == $("#selectngrade option:selected" ).attr("value")){
-				$("<option>").val(classes[i].id).text(classes[i].classname).appendTo('#selectclass');
-			}
-		};
+    $("#selectngrade option:selected" ).each(function() {
+        $("#selectclass option").remove();
+        for (var i = 0; i< classes.length; i++) {
+            if (classes[i].ngrade == $("#selectngrade option:selected" ).attr("value")){
+                $("<option>").val(classes[i].id).text(classes[i].classname).appendTo('#selectclass');
+            }
+        };
 
-	});
+    });
 
 
 });
@@ -180,13 +391,23 @@ $("#selectngrade").change(function(){
 
 
 $("#changebtn").click(function(){
-	$("#resultrow").css('display', 'none');
-	$("#selectrow").css('display', 'block');
+    $("#resultrow").css('display', 'none');
+    $("#selectrow").css('display', 'block');
+
 });
 
 $("#cancelbtn").click(function(){
-	$("#resultrow").css('display', 'block');
-	$("#selectrow").css('display', 'none');
+    $("#resultrow").css('display', 'block');
+    $("#selectrow").css('display', 'none');
+});
+
+$("button.deletebtn").each(function(){
+    $(this).click(function(){
+        var temphref=$(this).next().text();
+        $("#modalcfmbtn").attr('href',temphref);
+        $("#deleteModal").modal('show');
+
+    });
 });
 
 
