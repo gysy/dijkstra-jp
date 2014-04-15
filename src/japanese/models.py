@@ -12,7 +12,7 @@ class Ngrade(models.Model):
     
 class Jpclass(models.Model):
     ngrade = models.ForeignKey(Ngrade)
-    classname = models.CharField(max_length=10)
+    classname = models.CharField(max_length=20)
     
     def __unicode__(self):
         return smart_text('Classname:%s %s' % (self.classname, self.ngrade))
@@ -34,7 +34,7 @@ class JpclasssubmitAdmin(admin.ModelAdmin):
 
 class Examdate(models.Model):
     month = models.IntegerField()
-    year = models.IntegerField(default = 0)
+    year = models.IntegerField()
     def __unicode__(self):
         return smart_text('%s %s' % (str(self.month), str(self.year)))
 
