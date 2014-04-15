@@ -12,8 +12,11 @@ class Examdate(models.Model):
     def __unicode__(self):
         return self.date
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> gybranch
 class Examsignup(models.Model):
     ngrade = models.ForeignKey(Ngrade)
     examdate = models.ForeignKey(Examdate)

@@ -1,0 +1,11 @@
+{% extends "score/base.html" %}
+{% block title %}Insert title here{% endblock %}
+{% block content %}
+<p><b>Entering success</b></p>
+
+<form>
+	{% for score in exam_score %}
+		{{user}}&nbsp&nbsp{{score}}<br />
+	{% endfor %}
+</form>
+{% endblock %}

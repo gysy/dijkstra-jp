@@ -12,5 +12,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^stationary/', include('stationary.urls',namespace='stationary')),
     url(r'^account/', include('account.urls',namespace='account')),
-    url(r'^japanese/', include('japanese.urls',namespace='japanese')),
+    url(r'^japanese/', include('jpclass.urls',namespace='jpclass')),
     )

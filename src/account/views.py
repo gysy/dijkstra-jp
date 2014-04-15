@@ -23,7 +23,7 @@ def login(request):
             if user.is_active:  
                         user_login(request, user)  
 #                         return HttpResponseRedirect('/account/%d' % user.id)  
-                        return HttpResponseRedirect(reverse('score:index'))
+                        return HttpResponseRedirect(reverse('japanese:japanese_index'))
             else:  
                     return HttpResponse('User might be not invoked!')  
         else:  

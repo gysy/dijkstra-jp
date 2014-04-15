@@ -1,0 +1,18 @@
+<html>
+<head>
+	{% load staticfiles %}
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}"/>
+	<script src="{% static "js/jquery-2.1.0.min.js" %}"></script>
+	<script src="{% static "js/bootstrap.min.js" %}"></script>
+	<title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+	<form action="{% url 'account:logout' %}" method="post">
+		{% block user %}欢迎用户：{{user.username}}{% endblock %}
+		{% csrf_token %} 
+		<input type="submit" value="Logout" />
+	</form>
+	{% block content %}{% endblock %}
+</body>
+</html>
